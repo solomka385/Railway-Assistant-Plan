@@ -1,0 +1,41 @@
+{
+  "name": "railway-assistant",
+  "version": "1.0.0",
+  "description": "Telegram Web App for railway emergency assistance",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:restart": "docker-compose restart",
+    "install-deps": "npm install express cors pg redis"
+  },
+  "dependencies": {
+    "axios": "^1.13.6",
+    "bcrypt": "^6.0.0",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "exceljs": "^4.4.0",
+    "express": "^4.22.1",
+    "express-session": "^1.19.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^2.7.0",
+    "pg": "^8.20.0",
+    "redis": "^4.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "telegram",
+    "webapp",
+    "postgresql",
+    "redis",
+    "railway"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

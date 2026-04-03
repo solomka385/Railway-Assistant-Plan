@@ -1,0 +1,109 @@
+services:
+  rag-system:
+    build:
+      context: /home/solomka385
+      dockerfile: /home/solomka385/dip_kop/docker_cloud/Dockerfile
+    container_name: rag-system
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      # PostgreSQL конфигурация (Yandex Cloud Managed PostgreSQL)
+      - PG_HOST=${PG_HOST}
+      - PG_PORT=${PG_PORT:-6432}
+      - PG_DB=${PG_DB}
+      - PG_USER=${PG_USER}
+      - PG_PASSWORD=${PG_PASSWORD}
+      - PG_SSLMODE=${PG_SSLMODE:-require}
+      - PG_SSLROOTCERT=${PG_SSLROOTCERT:-}
+      - PG_MINCONN=${PG_MINCONN:-1}
+      - PG_MAXCONN=${PG_MAXCONN:-10}
+      
+      # Путь к модели LLM (монтируется как volume)
+      - MODEL_PATH=/app/models/vikhr_nemo_12b
+      
+      # Название модели для эмбеддингов (скачивается из HuggingFace)
+      - EMBEDDING_MODEL_NAME=${EMBEDDING_MODEL_NAME:-sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}
+      
+      # Пути к директориям данных
+      - PERSIST_DIRECTORY_TECHNIC=/app/chroma_db_technic
+      - PERSIST_DIRECTORY_WORK_PLAN=/app/chroma_db_work_plan
+      - PERSIST_DIRECTORY_ALL_DOCS=/app/chroma_db_all_docs
+      - PERSIST_DIRECTORY_EMPLOYEES=/app/chroma_db_employees
+      - PERSIST_DIRECTORY_SUBDIVISIONS=/app/chroma_db_subdivisions
+      - PERSIST_DIRECTORY_EMPLOYEES_EXAMPLES=/app/chroma_db_employees_examples
+      - PERSIST_DIRECTORY_SUBDIVISIONS_EXAMPLES=/app/chroma_db_subdivisions_examples
+      
+      # Пути к документам
+      - DOCS_FOLDER_TECHNIC=/app/docs/list_technic
+      - DOCS_FOLDER_WORK_PLAN=/app/docs/work_plan
+      - DOCS_FOLDER_ALL_DOCS=/app/docs/all_docs
+      - DOCS_FOLDER_EMPLOYEES=/app/docs/list_employee
+      - DOCS_FOLDER_SUBDIVISIONS=/app/docs/list_subdivisions
+      
+      # API ключи (если используются)
+      - COHERE_API_KEY=${COHERE_API_KEY:-}
+      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY:-}
+      
+      # Настройки обработки
+      - MAX_KEYWORDS_TO_EXTRACT=${MAX_KEYWORDS_TO_EXTRACT:-7}
+      
+      # Логирование
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    
+    volumes:
+      # Монтирование директорий для персистентности данных
+      - chroma_technic:/app/chroma_db_technic
+      - chroma_work_plan:/app/chroma_db_work_plan
+      - chroma_all_docs:/app/chroma_db_all_docs
+      - chroma_employees:/app/chroma_db_employees
+      - chroma_subdivisions:/app/chroma_db_subdivisions
+      - chroma_employees_examples:/app/chroma_db_employees_examples
+      - chroma_subdivisions_examples:/app/chroma_db_subdivisions_examples
+      - logs:/app/logs
+      
+      # Монтирование модели LLM (папка model в корне ВМ)
+      - /home/solomka385/dip_kop/model/vikhr_nemo_12b:/app/models/vikhr_nemo_12b:ro
+      
+      # Монтирование документов (для обновления без пересборки)
+      - /home/solomka385/dip_kop/rag_system/docs:/app/docs:ro
+      
+    networks:
+      - rag-network
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  rag-network:
+    driver: bridge
+
+volumes:
+  chroma_technic:
+    driver: local
+  chroma_work_plan:
+    driver: local
+  chroma_all_docs:
+    driver: local
+  chroma_employees:
+    driver: local
+  chroma_subdivisions:
+    driver: local
+  chroma_employees_examples:
+    driver: local
+  chroma_subdivisions_examples:
+    driver: local
+  logs:
+    driver: local
