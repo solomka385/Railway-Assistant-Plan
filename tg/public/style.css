@@ -1,0 +1,1392 @@
+:root {
+    --rzd-red: #E31E24;
+    --rzd-dark-red: #B01016;
+    --rzd-white: #FFFFFF;
+    --rzd-light-gray: #F5F5F5;
+    --rzd-gray: #E0E0E0;
+    --rzd-dark-gray: #333333;
+    --rzd-text: #2C2C2C;
+    --rzd-border: #CCCCCC;
+    --user-msg-bg: #F0F0F0;
+    --bot-msg-bg: #FFFFFF;
+    --streaming-color: #FFEBEE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--rzd-white);
+    color: var(--rzd-text);
+    height: 100vh;
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+/* Страница входа */
+.login-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--rzd-red) 0%, #B01016 100%);
+    height: 100vh;
+    overflow: auto;
+}
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+.login-card {
+    background: var(--rzd-white);
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+}
+.logo {
+    margin-bottom: 20px;
+}
+.login-card h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--rzd-red);
+    margin-bottom: 8px;
+}
+.subtitle {
+    color: var(--rzd-dark-gray);
+    margin-bottom: 30px;
+}
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+.input-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: var(--rzd-dark-gray);
+}
+.input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--rzd-border);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+.input-group input:focus {
+    outline: none;
+    border-color: var(--rzd-red);
+    box-shadow: 0 0 0 2px rgba(227,30,36,0.1);
+}
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--rzd-red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.btn-primary:hover {
+    background-color: var(--rzd-dark-red);
+    transform: translateY(-1px);
+}
+.btn-primary:active {
+    transform: scale(0.98);
+}
+.error-message {
+    color: var(--rzd-red);
+    margin-top: 15px;
+    min-height: 20px;
+}
+
+/* Основной интерфейс */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 100vw;
+}
+.app-header {
+    background-color: var(--rzd-red);
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+.menu-btn, .profile-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu-btn:hover, .profile-btn:hover {
+    background-color: rgba(255,255,255,0.15);
+}
+.app-title {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Переключатель режимов */
+.mode-switch {
+    background-color: white;
+    padding: 6px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--rzd-red);
+    flex-shrink: 0;
+}
+.mode-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--rzd-dark-gray);
+}
+.mode-label input[type="radio"] {
+    margin-right: 6px;
+    accent-color: var(--rzd-red);
+}
+.mode-label input[type="radio"]:checked + span {
+    color: var(--rzd-red);
+    font-weight: 600;
+}
+
+.location-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    border: 1px solid var(--rzd-border);
+    margin: 6px 16px;
+}
+
+.location-indicator.hidden {
+    display: none;
+}
+
+.location-indicator.active {
+    border-color: #4CAF50;
+    background-color: #E8F5E9;
+}
+
+.location-indicator.inactive {
+    border-color: #FF9800;
+    background-color: #FFF3E0;
+}
+
+.location-indicator #locationText {
+    color: var(--rzd-dark-gray);
+    white-space: nowrap;
+}
+
+.location-indicator button {
+    padding: 4px 10px;
+    background-color: var(--rzd-red);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.location-indicator button:hover {
+    background-color: var(--rzd-dark-red);
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Боковая панель */
+.sidebar {
+    width: 280px;
+    background-color: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 20;
+    transform: translateX(-100%);
+}
+.sidebar.active {
+    transform: translateX(0);
+}
+.sidebar-header {
+    padding: 20px 16px;
+    border-bottom: 2px solid var(--rzd-red);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+.sidebar-header h2 {
+    font-size: 18px;
+    color: var(--rzd-red);
+    font-weight: bold;
+}
+.new-chat-btn {
+    padding: 8px 12px;
+    background-color: var(--rzd-red);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.new-chat-btn:hover {
+    background-color: var(--rzd-dark-red);
+}
+.chat-list {
+    padding: 8px 0;
+    flex: 1;
+    overflow-y: auto;
+}
+.chat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    margin: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+    border-left: 4px solid transparent;
+}
+.chat-item:hover {
+    background-color: var(--rzd-light-gray);
+}
+.chat-item.active {
+    background-color: #FFEBEE;
+    border-left-color: var(--rzd-red);
+    font-weight: 600;
+    color: var(--rzd-red);
+}
+.chat-content {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.delete-chat-btn {
+    background: none;
+    border: none;
+    color: var(--rzd-red);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px 8px;
+    opacity: 0.7;
+}
+.delete-chat-btn:hover {
+    opacity: 1;
+}
+
+/* Область чата */
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--rzd-light-gray);
+    height: 100%;
+    overflow: hidden;
+}
+
+.messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 80px;
+    height: 0;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rzd-red) var(--rzd-light-gray);
+}
+
+.messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages::-webkit-scrollbar-track {
+    background: var(--rzd-light-gray);
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: var(--rzd-red);
+    border-radius: 3px;
+}
+
+/* Приветственное сообщение */
+.welcome-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    max-width: 500px;
+    margin: 0 auto;
+}
+.welcome-message h3 {
+    font-size: 24px;
+    color: var(--rzd-red);
+    margin-bottom: 16px;
+}
+.mode-explanation {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+.mode-option {
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border-left: 4px solid var(--rzd-red);
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+/* Сообщения */
+.message {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    line-height: 1.4;
+    font-size: 14px;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user {
+    align-self: flex-end;
+    background-color: var(--rzd-red);
+    color: white;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.bot {
+    align-self: flex-start;
+    background-color: white;
+    border-bottom-left-radius: 5px;
+    border-left: 4px solid var(--rzd-red);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.bot.streaming {
+    background-color: white;
+    border-left-color: var(--rzd-red);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { border-left-color: var(--rzd-red); }
+    50% { border-left-color: #FF6B6B; }
+    100% { border-left-color: var(--rzd-red); }
+}
+
+.typing-indicator {
+    display: inline-flex;
+    color: #666;
+    font-style: italic;
+}
+.typing-indicator::after {
+    content: '...';
+    animation: typing 1.5s infinite;
+}
+@keyframes typing {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
+
+/* Структурированные сообщения */
+.bot .section-title {
+    font-weight: 700;
+    color: var(--rzd-red);
+    margin: 15px 0 8px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--rzd-red);
+    font-size: 16px;
+}
+.bot .stage-title {
+    font-weight: 600;
+    color: #B01016;
+    margin: 12px 0 8px 0;
+    padding: 8px 12px;
+    background-color: #FFF0F0;
+    border-left: 4px solid var(--rzd-red);
+    border-radius: 4px;
+    font-size: 15px;
+}
+.bot .sub-stage {
+    margin: 8px 0 8px 15px;
+    padding: 6px 0;
+}
+.bot .sub-stage strong {
+    color: #D44A4A;
+    font-weight: 600;
+}
+.bot .list-item {
+    margin: 4px 0;
+    padding-left: 8px;
+    line-height: 1.4;
+    position: relative;
+}
+.bot .list-item::before {
+    content: "•";
+    color: var(--rzd-red);
+    position: absolute;
+    left: -5px;
+}
+.bot .numbered-item {
+    margin: 6px 0;
+    padding: 4px 8px;
+    background-color: #FAFAFA;
+    border-radius: 4px;
+    border-left: 3px solid var(--rzd-red);
+}
+.bot .bullet-list {
+    margin-left: 1.5em;
+    padding-left: 0;
+    list-style-type: disc;
+}
+.bot .numbered-list {
+    margin-left: 1.5em;
+    padding-left: 0;
+    list-style-type: decimal;
+}
+.bot .stage-details {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+.bot .stage-details li {
+    margin-bottom: 0.5em;
+}
+/* Поле ввода */
+.input-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background-color: white;
+    border-top: 2px solid var(--rzd-red);
+    display: flex;
+    gap: 8px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    z-index: 10;
+    flex-shrink: 0;
+}
+#userInput {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--rzd-border);
+    border-radius: 24px;
+    outline: none;
+    font-size: 14px;
+}
+#userInput:focus {
+    border-color: var(--rzd-red);
+    box-shadow: 0 0 0 2px rgba(227,30,36,0.1);
+}
+.send-btn {
+    width: 48px;
+    height: 48px;
+    background-color: var(--rzd-red);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+.send-btn:hover {
+    background-color: var(--rzd-dark-red);
+}
+.send-btn:active {
+    transform: scale(0.95);
+}
+
+/* Блокировка ввода */
+#userInput.disabled,
+#userInput[disabled] {
+    background-color: var(--rzd-light-gray);
+    color: var(--rzd-dark-gray);
+    cursor: not-allowed;
+}
+
+.send-btn.disabled,
+.send-btn[disabled] {
+    background-color: var(--rzd-gray);
+    cursor: not-allowed;
+}
+
+/* Модальные окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: white;
+    margin: 20% auto;
+    padding: 24px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    border-top: 4px solid var(--rzd-red);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.close {
+    color: #aaa;
+    font-size: 28px;
+    cursor: pointer;
+}
+.close:hover {
+    color: black;
+}
+.profile-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rzd-border);
+}
+.label {
+    font-weight: 500;
+    color: var(--rzd-red);
+}
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+.btn-danger {
+    background-color: var(--rzd-red);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .message {
+        max-width: 90%;
+    }
+    .input-area {
+        padding: 8px 12px;
+    }
+    .sidebar {
+        width: 260px;
+    }
+}
+
+/* Адаптивность для десктопа */
+@media (min-width: 769px) {
+    /* Переключатель режимов на десктопе - вертикальное расположение */
+    .mode-switch {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+    }
+    
+    .mode-label {
+        font-size: 15px;
+        padding: 8px 16px;
+    }
+    
+    /* Индикатор геолокации на десктопе - отдельная строка */
+    .location-indicator {
+        display: flex;
+        margin-left: 0;
+        font-size: 13px;
+        padding: 8px 16px;
+        margin-top: 4px;
+    }
+    
+    .location-indicator button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    /* Кнопки в сообщениях бота на десктопе */
+    .copy-btn,
+    .marts-data-btn,
+    .export-excel-btn {
+        display: inline-block;
+        margin-right: 8px;
+        margin-top: 8px;
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    /* Сообщения на десктопе */
+    .message {
+        max-width: 70%;
+        font-size: 15px;
+        padding: 14px 18px;
+    }
+    
+    /* Контейнер чата на десктопе */
+    .chat-window {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    /* Сайдбар на десктопе */
+    .sidebar {
+        width: 320px;
+    }
+    
+    /* Модальные окна на десктопе */
+    .modal-content {
+        max-width: 500px;
+        padding: 30px;
+    }
+    
+    .location-modal {
+        max-width: 800px;
+    }
+    
+    .map-view {
+        height: 500px;
+    }
+}
+
+/* Исправление скролла */
+.chat-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.messages {
+    flex: 1 1 auto;
+    overflow-y: auto !important;
+    padding-bottom: 80px;
+    height: 0; /* Важно для flex-контейнера */
+    min-height: 0;
+}
+
+/* Убедимся, что поле ввода не перекрывает сообщения */
+.input-area {
+    position: sticky;
+    bottom: 0;
+    flex-shrink: 0;
+    background-color: white;
+    border-top: 2px solid var(--rzd-red);
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+.message-sources {
+    margin-top: 10px;
+    font-size: 0.9em;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+}
+.message-sources details {
+    cursor: pointer;
+}
+.message-sources summary {
+    font-weight: 500;
+    color: #666;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 8px;
+}
+.message-sources summary:hover {
+    background: #f0f0f0;
+}
+.message-sources ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 8px;
+}
+.message-sources li {
+    margin-bottom: 8px;
+    padding: 5px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+.message-sources a {
+    color: #0066cc;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+.message-sources a:hover {
+    text-decoration: underline;
+}
+.source-preview {
+    font-size: 0.85em;
+    color: #555;
+    background: #fff;
+    padding: 4px;
+    border-left: 2px solid #ccc;
+    white-space: pre-wrap;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+/* Контейнер для кнопок в сообщениях бота */
+.message-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.message-actions button,
+.message-actions span {
+    cursor: pointer;
+    user-select: none;
+}
+
+.copy-btn {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.copy-btn:hover {
+   background: #f0f0f0;
+   border-color: #999;
+}
+.marts-data-btn {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: inline-block;
+    user-select: none;
+}
+
+.marts-data-btn:hover {
+   background: #f0f0f0;
+   border-color: #999;
+}
+
+.export-excel-btn {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: inline-block;
+    user-select: none;
+    color: #217346;
+    border-color: #217346;
+}
+
+.export-excel-btn:hover {
+    background: #217346;
+    color: white;
+    border-color: #217346;
+}
+
+.marts-data-btn[role="button"] {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Модальное окно геолокации */
+.location-modal {
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.location-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.location-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background-color: white;
+    border: 2px solid var(--rzd-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 16px;
+    width: 100%;
+}
+
+.location-option-btn:hover {
+    background-color: var(--rzd-light-gray);
+    border-color: var(--rzd-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.option-icon {
+    font-size: 24px;
+}
+
+.option-text {
+    flex: 1;
+    text-align: left;
+    font-weight: 500;
+    color: var(--rzd-dark-gray);
+}
+
+.map-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.map-view {
+    width: 100%;
+    height: 450px;
+    border-radius: 8px;
+    border: 2px solid var(--rzd-border);
+    position: relative;
+}
+
+/* Убеждаемся что карта заполняет контейнер */
+.map-view > * {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.location-status {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.location-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.location-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.location-status.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Переключатель режимов с индикатором */
+.mode-switch {
+    display: flex;
+    align-items: center;
+    padding-right: 16px;
+}
+
+/* Уведомление о необходимости геолокации */
+.location-notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background-color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1000;
+    max-width: 90%;
+    width: 500px;
+    border-left: 4px solid #ff9800;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.location-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.notification-text {
+    flex: 1;
+    font-size: 14px;
+    color: var(--rzd-dark-gray);
+    line-height: 1.4;
+}
+
+.notification-btn {
+    background-color: var(--rzd-red);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+.notification-btn:hover {
+    background-color: var(--rzd-dark-red);
+}
+
+@media (max-width: 768px) {
+    .map-view {
+        height: 350px;
+    }
+    
+    .location-modal {
+        width: 95%;
+        margin: 5% auto;
+        padding: 16px;
+    }
+    
+    .location-notification {
+        width: 90%;
+        top: 10px;
+    }
+    
+    .notification-content {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .notification-btn {
+        width: 100%;
+    }
+    
+    /* Для мобильной версии: режимы на одной строке, геолокация под ними */
+    .mode-switch {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px;
+    }
+    
+    .mode-switch > .mode-label {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .mode-switch > .mode-label:first-child {
+        margin-right: 4px;
+    }
+    
+    .mode-switch > .mode-label:last-child {
+        margin-left: 4px;
+    }
+    
+    .location-indicator {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        font-size: 10px;
+    }
+    
+    .location-indicator button {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+}
+
+
+/* Стили для данных из витрин - уменьшенный блок */
+.marts-data-container {
+    background-color: var(--rzd-light-gray);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.marts-section {
+    margin-bottom: 10px;
+}
+
+.marts-section:last-child {
+    margin-bottom: 0;
+}
+
+.marts-section h3 {
+    color: var(--rzd-red);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rzd-border);
+}
+
+.station-block {
+    background-color: var(--rzd-white);
+    border-radius: 4px;
+    padding: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.station-block:last-child {
+    margin-bottom: 0;
+}
+
+.station-block h4 {
+    color: var(--rzd-dark-gray);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--rzd-border);
+}
+
+.equipment-list, .staff-list, .responsibles-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.equipment-list li, .staff-list li, .responsibles-list li {
+    padding: 4px 8px;
+    margin-bottom: 3px;
+    background-color: #f8f9fa;
+    border-radius: 3px;
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+.equipment-list li:last-child, .staff-list li:last-child, .responsibles-list li:last-child {
+    margin-bottom: 0;
+}
+
+.marts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.marts-item {
+    background-color: var(--rzd-white);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.marts-item:last-child {
+    margin-bottom: 0;
+}
+
+.marts-item strong {
+    color: var(--rzd-dark-gray);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.marts-item small {
+    color: var(--rzd-text);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+    .map-view {
+        height: 280px;
+    }
+    
+    .option-text {
+        font-size: 14px;
+    }
+    
+    .location-option-btn {
+        padding: 12px 16px;
+    }
+}
+
+/* Стили для данных из витрин (Marts) */
+.marts-data-container {
+    padding: 16px;
+    background-color: var(--rzd-light-gray);
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.marts-section {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rzd-border);
+}
+
+.marts-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.marts-section h3 {
+    color: var(--rzd-red);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.marts-item ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 4px 0 0 0;
+}
+
+.marts-item li {
+    margin-bottom: 2px;
+}
+
+@media (max-width: 480px) {
+    .marts-data-container {
+        padding: 12px;
+    }
+    
+    .marts-section h3 {
+        font-size: 14px;
+    }
+    
+    .marts-item {
+        padding: 8px 10px;
+    }
+    
+    .marts-item small {
+        font-size: 11px;
+    }
+}
+
+/* Стили для блока с данными из витрин (встроенный) */
+.marts-data-block {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.marts-data-block details {
+    cursor: pointer;
+}
+
+/* Скрываем summary, так как кнопка уже существует в .message-actions */
+.marts-data-block summary {
+    display: none;
+}
+
+.marts-data-summary {
+    font-weight: 500;
+    color: #666;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.marts-data-summary:hover {
+    background: #f0f0f0;
+}
+
+.marts-data-block .marts-data-container {
+    margin-top: 0;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+.marts-data-block .marts-section {
+    margin-bottom: 12px;
+}
+
+.marts-data-block .marts-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Стили для ручного ввода координат */
+.manual-location-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 16px;
+    border: 1px solid var(--rzd-border);
+}
+
+.manual-location-container .input-group {
+    margin-bottom: 16px;
+}
+
+.manual-location-container .input-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--rzd-dark-gray);
+    font-size: 14px;
+}
+
+.manual-location-container .input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--rzd-border);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.manual-location-container .input-group input:focus {
+    outline: none;
+    border-color: var(--rzd-red);
+    box-shadow: 0 0 0 2px rgba(227,30,36,0.1);
+}
+
+.manual-location-container .input-group input.error {
+    border-color: var(--rzd-red);
+    background-color: #fff5f5;
+}
+
+.manual-location-container .btn-primary {
+    width: 100%;
+}
+
+.manual-location-container .location-status {
+    font-size: 13px;
+    padding: 10px;
+    margin-top: 12px;
+}
+
+.marts-data-block .marts-section h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.marts-data-block .station-block {
+    margin-bottom: 10px;
+}
+
+.marts-data-block .station-block:last-child {
+    margin-bottom: 0;
+}
+
+.marts-data-block .station-block h4 {
+    font-size: 13px;
+}
+
+.marts-data-block .equipment-list li,
+.marts-data-block .staff-list li,
+.marts-data-block .responsibles-list li {
+    font-size: 12px;
+    padding: 4px 8px;
+}
