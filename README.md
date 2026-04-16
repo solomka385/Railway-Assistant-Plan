@@ -4,18 +4,18 @@
 
 ## 📋 Оглавление
 
-- [О проекте](#о-проекте)
-- [Архитектура](#архитектура)
-- [Технологический стек](#технологический-стек)
-- [Установка и запуск](#установка-и-запуск)
-- [Как это работает](#как-это-работает)
-- [API документация](#api-документация)
-- [Структура проекта](#структура-проекта)
-- [Разработка](#разработка)
+- [О проекте](#about-project)
+- [Архитектура](#architecture)
+- [Технологический стек](#tech-stack)
+- [Установка и запуск](#installation)
+- [Как это работает](#how-it-works)
+- [API документация](#api-docs)
+- [Структура проекта](#project-structure)
+- [Разработка](#development)
 
 ---
 
-## 🎯 О проекте
+## 🎯 О проекте {#about-project}
 
 Система предназначена для оперативного анализа железнодорожных аварий и предоставления рекомендаций по ликвидации последствий. Она помогает определить:
 
@@ -37,7 +37,7 @@
 
 ---
 
-## 🏗️ Архитектура
+## 🏗️ Архитектура {#architecture}
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -61,7 +61,7 @@
 
 ---
 
-## 🛠️ Технологический стек
+## 🛠️ Технологический стек {#tech-stack}
 
 ### Telegram Web App (`tg/`)
 
@@ -88,7 +88,7 @@
 
 ---
 
-## 🚀 Установка и запуск
+## 🚀 Установка и запуск {#installation}
 
 ### Требования
 
@@ -122,8 +122,8 @@ cp .env.example .env
 # PostgreSQL
 PG_HOST=localhost
 PG_PORT=5432
-PG_DB=db1
-PG_USER=test_cla
+PG_DB=
+PG_USER=
 PG_PASSWORD=your_password
 
 # RAG API
@@ -150,17 +150,26 @@ pip install -r requirements.txt
 # PostgreSQL
 PG_HOST=localhost
 PG_PORT=5432
-PG_DB=
-PG_USER=
+PG_DB=db1
+PG_USER=test_cla
 PG_PASSWORD=your_password
 
 # Models
 MODEL_PATH=/path/to/vikhr_nemo_12b
 EMBEDDING_MODEL_NAME=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 
+# API Keys (опционально)
+COHERE_API_KEY=your_key
+HUGGINGFACE_API_KEY=your_key
 ```
 
 ### 3. Инициализация базы данных
+
+```bash
+# Примените миграции PostgreSQL
+psql -U test_cla -d db1 -f tg/migrate_add_mode_column.sql
+psql -U test_cla -d db1 -f tg/migrate_create_station_responsibles_view.sql
+```
 
 ### 4. Индексация документов
 
@@ -198,7 +207,7 @@ docker-compose up -d
 
 ---
 
-## ⚙️ Как это работает
+## ⚙️ Как это работает {#how-it-works}
 
 ### 1. Пользователь отправляет запрос
 
@@ -295,7 +304,7 @@ curl -X 'POST' \
 
 ---
 
-## 📁 Структура проекта
+## 📁 Структура проекта {#project-structure}
 
 ```
 dip_kop/
@@ -347,7 +356,7 @@ dip_kop/
 
 ---
 
-## 🔧 Разработка
+## 🔧 Разработка {#development}
 
 ### Добавление новых документов
 
