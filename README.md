@@ -134,7 +134,7 @@ RAG_API_URL=http://localhost:8001
 # Session
 SESSION_SECRET=your_secret_key
 
-# Redis (опционально)
+# Redis
 REDIS_HOST=localhost
 REDIS_PORT=6379
 ```
@@ -160,9 +160,6 @@ PG_PASSWORD=your_password
 MODEL_PATH=/path/to/vikhr_nemo_12b
 EMBEDDING_MODEL_NAME=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 
-# API Keys (опционально)
-COHERE_API_KEY=your_key
-HUGGINGFACE_API_KEY=your_key
 ```
 
 ### 3. Инициализация базы данных
