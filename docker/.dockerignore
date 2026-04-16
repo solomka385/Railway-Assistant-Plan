@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Chroma DB (будут созданы в контейнере)
+chroma_db_*/
+**/chroma_db_*/
+
+# Logs
+*.log
+logs/
+*.txt
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Git
+.git/
+.gitignore
+
+# Docker
+docker/
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# Documentation (docs монтируется как volume, исключаем из сборки)
+rag_system/docs/
+
+# Markdown файлы (кроме requirements.txt)
+*.md
+!rag_system/requirements.txt
+!rag_system/API_DESCRIPTION.md
+
+# Temporary files
+*.tmp
+*.bak
+*.cache
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Large files (если есть)
+*.zip
+*.tar
+*.tar.gz
+*.rar
