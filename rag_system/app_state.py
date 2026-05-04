@@ -111,15 +111,15 @@ def init_system():
             model=model,
             tokenizer=tokenizer,
             max_new_tokens=4096,
-            temperature=0.2,
+            temperature=0.2,  # Снижена для более точного выбора из справочников
             return_full_text=False,
             pad_token_id=tokenizer.eos_token_id,
             batch_size=1,
             truncation=True,
             do_sample=True,
-            top_k=75,
-            top_p=0.95,
-            repetition_penalty=1.1
+            top_k=20,
+            top_p=0.8,
+            repetition_penalty=1.1  # Добавлен штраф за повторения
         )
 
         logger.info("[ИНИЦИАЛИЗАЦИЯ] Загрузка эмбеддинг-модели...")
@@ -222,15 +222,15 @@ def batch_generate(texts):
         results = pipe(
             texts,
             max_new_tokens=4096,
-            temperature=0.2,
+            temperature=0.2,  # Снижена для более точного выбора из справочников
             return_full_text=False,
             pad_token_id=tokenizer.eos_token_id,
             batch_size=1,
             truncation=True,
             do_sample=True,
-            top_k=75,
-            top_p=0.95,
-            repetition_penalty=1.1
+            top_k=20,
+            top_p=0.8,
+            repetition_penalty=1.1  # Добавлен штраф за повторения
         )
 
         outputs = []

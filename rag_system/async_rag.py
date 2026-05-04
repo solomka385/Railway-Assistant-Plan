@@ -56,7 +56,7 @@ async def async_get_chat_response(question: str, session_id: str = None) -> Asyn
             full_response = ""
             
             # Используем настоящий стриминг токенов
-            async for token in llm_gen.generate_stream(prompt, session_id=session_id_local, max_new_tokens=4096, temperature=0.3):
+            async for token in llm_gen.generate_stream(prompt, session_id=session_id_local, max_new_tokens=4096, temperature=0.2):
                 if token:
                     full_response += token
                     yield token
@@ -242,6 +242,7 @@ async def async_get_rag_response_with_session(question: str, session_id: str = N
                 prev_technics_str=prev_technics_str,
                 question=question,
                 subdivisions_str=subdivisions_str,
+                technic_reference=prompts.format_technic_reference_for_prompt(),
                 is_edit=is_edit,
                 edit_type=edit_type
             )
@@ -279,6 +280,7 @@ async def async_get_rag_response_with_session(question: str, session_id: str = N
                 question=question,
                 subdivisions_str=subdivisions_str,
                 technics_str=technics_str,
+                employees_reference=prompts.format_employees_reference_for_prompt(),
                 is_edit=is_edit,
                 edit_type=edit_type
             )
@@ -351,6 +353,22 @@ async def async_get_rag_response_with_session(question: str, session_id: str = N
             
             if warnings:
                 logger.warning(f"[ASYNC_MAIN] Предупреждения при валидации плана: {warnings}")
+            
+            # Если список техники пустой, извлекаем технику из валидированного плана
+            if not final["technics"]["list"]:
+                logger.info("[ASYNC_MAIN] Список техники пустой, извлекаем из плана работ...")
+                extracted_technics = response_processing.extract_technics_from_work_plan(validated_plan)
+                if extracted_technics:
+                    final["technics"]["list"] = extracted_technics
+                    logger.info(f"[ASYNC_MAIN] Извлечена техника из плана: {extracted_technics}")
+            
+            # Если список сотрудников пустой, извлекаем сотрудников из валидированного плана
+            if not final["employees"]["list"]:
+                logger.info("[ASYNC_MAIN] Список сотрудников пустой, извлекаем из плана работ...")
+                extracted_employees = response_processing.extract_employees_from_work_plan(validated_plan)
+                if extracted_employees:
+                    final["employees"]["list"] = extracted_employees
+                    logger.info(f"[ASYNC_MAIN] Извлечены сотрудники из плана: {extracted_employees}")
             
             final["work_plan"]["plan"] = validated_plan
             final["work_plan"]["sources"] = sources_plan

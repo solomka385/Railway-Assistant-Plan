@@ -222,7 +222,7 @@ class AsyncLLMGenerator:
         self.active_requests = {}
         self.request_counter = 0
         
-    async def generate(self, text: str, session_id: Optional[str] = None, 
+    async def generate(self, text: str, session_id: Optional[str] = None,
                       max_new_tokens: int = 4096, temperature: float = 0.2) -> str:
         """
         Генерация ответа с ограничением количества одновременных запросов.
@@ -266,7 +266,7 @@ class AsyncLLMGenerator:
                 del self.active_requests[request_id]
     
     async def generate_batch(self, texts: List[str], session_id: Optional[str] = None,
-                           max_new_tokens: int = 4096, temperature: float = 0.2) -> List[str]:
+                            max_new_tokens: int = 4096, temperature: float = 0.2) -> List[str]:
         """
         Генерация ответов для батча текстов.
         
@@ -302,7 +302,7 @@ class AsyncLLMGenerator:
                 del self.active_requests[request_id]
     
     async def generate_stream(self, text: str, session_id: Optional[str] = None,
-                            max_new_tokens: int = 4096, temperature: float = 0.2) -> AsyncGenerator[str, None]:
+                              max_new_tokens: int = 4096, temperature: float = 0.2) -> AsyncGenerator[str, None]:
         """
         Генерация ответа с настоящим стримингом токенов.
         
