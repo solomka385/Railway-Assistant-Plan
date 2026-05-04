@@ -28,7 +28,7 @@ services:
       - PG_MAXCONN=${PG_MAXCONN:-10}
       
       # Путь к модели LLM (монтируется как volume)
-      - MODEL_PATH=/app/models/vikhr_nemo_12b
+      - MODEL_PATH=/app/models/T-lite-it-2.1
       
       # Название модели для эмбеддингов (скачивается из HuggingFace)
       - EMBEDDING_MODEL_NAME=${EMBEDDING_MODEL_NAME:-sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}
@@ -70,9 +70,8 @@ services:
       - chroma_subdivisions_examples:/app/chroma_db_subdivisions_examples
       - logs:/app/logs
       
-      # Монтирование модели LLM (укажите путь к вашей модели на хосте)
-      # Модель остается на хосте, не копируется в контейнер
-      - ${MODEL_HOST_PATH:-E:/диплом/vikhr_nemo_12b}:/app/models/vikhr_nemo_12b:ro
+      # Монтирование модели LLM
+      - ${MODEL_HOST_PATH:-E:/диплом/T-lite-it-2.1}:/app/models/T-lite-it-2.1:ro
       
       # Монтирование документов (для обновления без пересборки)
       - ../rag_system/docs:/app/docs:ro
