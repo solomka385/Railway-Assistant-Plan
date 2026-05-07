@@ -591,8 +591,6 @@ curl -X 'POST' \
   }'
 ```
 
-Подробная документация API доступна в [`документация/API_DESCRIPTION.md`](документация/API_DESCRIPTION.md)
-
 ---
 
 ## 📁 Структура проекта
@@ -658,15 +656,6 @@ dip_kop/
 │   │   │   ├── response_processing.py  # Обработка ответов модели
 │   │   │   ├── retrieval.py  # Поиск документов
 │   │   │   └── session.py    # Управление сессиями
-│   │   ├── tests/             # Тесты
-│   │   │   ├── test_app_state_references.py  # Тесты справочников
-│   │   │   ├── test_keywords.py  # Тесты ключевых слов
-│   │   │   ├── test_normalize.py  # Тесты нормализации
-│   │   │   ├── test_redistribution.py  # Тесты перераспределения
-│   │   │   ├── test_reference_loading.py  # Тесты загрузки справочников
-│   │   │   ├── test_response_processing.py  # Тесты обработки ответов
-│   │   │   ├── test_task_queue.py  # Тесты очереди задач
-│   │   │   └── test_work_plan_fixes.py  # Тесты планов работ
 │   │   └── utils/             # Утилиты
 │   │       └── task_queue.py  # Очередь задач
 │   ├── database/                # SQL скрипты базы данных
@@ -697,11 +686,6 @@ dip_kop/
 │   │   ├── chroma_db_subdivisions/      # База подразделений
 │   │   ├── chroma_db_employees_examples/ # Примеры сотрудников
 │   │   └── chroma_db_subdivisions_examples/ # Примеры подразделений
-│   ├── evaluation_results/       # Результаты оценки
-│   │   ├── evaluation_*.csv  # Детальные результаты
-│   │   └── summary_*.json    # Сводные результаты
-│   ├── test_data/              # Тестовые данные
-│   │   └── accident_scenarios_*.json  # Сценарии аварий
 │   ├── .env_example             # Пример переменных окружения
 │   ├── keywords.json           # Ключевые слова для извлечения
 │   ├── migrate_add_unique_constraint.sql  # Миграция базы данных
